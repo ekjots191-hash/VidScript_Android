@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.roboek.vidscript.*
+import com.roboek.vidscript.R
 import com.roboek.vidscript.engine.ModelDownloader
 import com.roboek.vidscript.engine.Models
 import com.roboek.vidscript.rec.WorkService

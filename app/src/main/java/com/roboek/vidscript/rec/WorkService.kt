@@ -14,6 +14,7 @@ import android.provider.OpenableColumns
 import androidx.core.app.NotificationCompat
 import androidx.core.app.ServiceCompat
 import com.roboek.vidscript.*
+import com.roboek.vidscript.R
 import com.roboek.vidscript.engine.*
 import java.io.File
 import java.text.SimpleDateFormat
