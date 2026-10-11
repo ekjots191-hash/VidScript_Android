@@ -36,14 +36,14 @@ class AppModel(app: Application) : AndroidViewModel(app) {
     var modelsVersion by mutableIntStateOf(0)
         private set
 
-    fun setModel(v: String) { model = v; p.model = v; EngineCache.release() }
-    fun setLang(v: String) { lang = v; p.lang = v }
-    fun setVideo(v: Boolean) { video = v; p.video = v }
-    fun setSrcApp(v: Boolean) { srcApp = v; p.srcApp = v }
-    fun setSrcMic(v: Boolean) { srcMic = v; p.srcMic = v }
-    fun setLive(v: Boolean) { live = v; p.live = v }
-    fun setRecFolder(v: String?) { recFolder = v; p.recFolder = v }
-    fun setOutFolder(v: String?) { outFolder = v; p.outFolder = v }
+    fun updateModel(v: String) { model = v; p.model = v; EngineCache.release() }
+    fun updateLang(v: String) { lang = v; p.lang = v }
+    fun updateVideo(v: Boolean) { video = v; p.video = v }
+    fun updateSrcApp(v: Boolean) { srcApp = v; p.srcApp = v }
+    fun updateSrcMic(v: Boolean) { srcMic = v; p.srcMic = v }
+    fun updateLive(v: Boolean) { live = v; p.live = v }
+    fun updateRecFolder(v: String?) { recFolder = v; p.recFolder = v }
+    fun updateOutFolder(v: String?) { outFolder = v; p.outFolder = v }
     fun finishGuide() { p.onboarded = true; showGuide = false }
     fun bumpModels() { modelsVersion++ }
 
@@ -53,6 +53,6 @@ class AppModel(app: Application) : AndroidViewModel(app) {
     /** Se il modello scelto non è installato ma ne esiste un altro, passa a quello. */
     fun ensureValidModel() {
         val inst = installed()
-        if (inst.isNotEmpty() && inst.none { it.label == model }) setModel(inst[0].label)
+        if (inst.isNotEmpty() && inst.none { it.label == model }) updateModel(inst[0].label)
     }
 }

@@ -146,24 +146,24 @@ private fun RecordControls(vm: AppModel) {
     val folderLauncher = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri ->
         if (uri != null) {
             ctx.contentResolver.takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
-            vm.setRecFolder(uri.toString())
+            vm.updateRecFolder(uri.toString())
         }
     }
 
     Label("Cosa registrare")
-    Segmented(listOf("Solo audio", "Video + audio"), if (vm.video) 1 else 0, { vm.setVideo(it == 1) }, enabled = !locked)
+    Segmented(listOf("Solo audio", "Video + audio"), if (vm.video) 1 else 0, { vm.updateVideo(it == 1) }, enabled = !locked)
     Spacer(Modifier.height(14.dp))
     Label("Sorgenti audio")
-    CheckRow("Audio delle app del dispositivo", vm.srcApp && canApp, { vm.setSrcApp(it) }, enabled = !locked && canApp,
+    CheckRow("Audio delle app del dispositivo", vm.srcApp && canApp, { vm.updateSrcApp(it) }, enabled = !locked && canApp,
         sub = if (canApp) "Solo le app che consentono la cattura audio" else "Richiede Android 10 o successivo")
-    CheckRow("Audio del microfono", vm.srcMic, { vm.setSrcMic(it) }, enabled = !locked)
-    CheckRow("Trascrizione in tempo reale", vm.live, { vm.setLive(it) }, enabled = !locked)
+    CheckRow("Audio del microfono", vm.srcMic, { vm.updateSrcMic(it) }, enabled = !locked)
+    CheckRow("Trascrizione in tempo reale", vm.live, { vm.updateLive(it) }, enabled = !locked)
     Spacer(Modifier.height(12.dp))
     ModelPicker(vm, locked)
     Spacer(Modifier.height(12.dp))
     Label("Lingua parlata")
     Dropdown(LANGUAGES.firstOrNull { it.second == vm.lang }?.first ?: "Italiano", LANGUAGES.map { it.first },
-        { n -> vm.setLang(LANGUAGES.first { it.first == n }.second) }, enabled = !locked)
+        { n -> vm.updateLang(LANGUAGES.first { it.first == n }.second) }, enabled = !locked)
     Spacer(Modifier.height(12.dp))
     Label("Cartella di salvataggio")
     FolderRow(Storage.displayName(vm.recFolder), { folderLauncher.launch(null) }, !locked)
@@ -191,7 +191,7 @@ private fun ModelPicker(vm: AppModel, locked: Boolean) {
     val installed = vm.installed()
     Label("Qualità")
     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-        Dropdown(vm.model, installed.map { it.label }, { vm.setModel(it) }, Modifier.weight(1f),
+        Dropdown(vm.model, installed.map { it.label }, { vm.updateModel(it) }, Modifier.weight(1f),
             enabled = !locked, empty = "Nessun modello")
         GhostButton("Gestisci modelli", { vm.showModels = true })
     }
@@ -228,7 +228,7 @@ private fun FileControls(vm: AppModel) {
     val folderLauncher = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri ->
         if (uri != null) {
             ctx.contentResolver.takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
-            vm.setOutFolder(uri.toString())
+            vm.updateOutFolder(uri.toString())
         }
     }
     val notifLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { _ -> }
@@ -243,7 +243,7 @@ private fun FileControls(vm: AppModel) {
     Spacer(Modifier.height(12.dp))
     Label("Lingua parlata")
     Dropdown(LANGUAGES.firstOrNull { it.second == vm.lang }?.first ?: "Italiano", LANGUAGES.map { it.first },
-        { n -> vm.setLang(LANGUAGES.first { it.first == n }.second) }, enabled = !locked)
+        { n -> vm.updateLang(LANGUAGES.first { it.first == n }.second) }, enabled = !locked)
     Spacer(Modifier.height(12.dp))
     Label("Cartella dei testi (.txt)")
     FolderRow(Storage.displayName(vm.outFolder), { folderLauncher.launch(null) }, !locked)

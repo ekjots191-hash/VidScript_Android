@@ -105,7 +105,7 @@ fun GuideDialog(vm: AppModel) {
             }
             if (page > 0) { GhostButton("Indietro", { page-- }); Spacer(Modifier.width(8.dp)) }
             PrimaryButton(if (page == 3) "Inizia" else "Avanti", {
-                if (page == 0) { vm.setModel(sel); ModelDownloader.start(ctx, spec) }
+                if (page == 0) { vm.updateModel(sel); ModelDownloader.start(ctx, spec) }
                 if (page == 3) vm.finishGuide() else page++
             }, Modifier.widthIn(min = 120.dp))
         }
@@ -206,7 +206,7 @@ fun ModelManagerDialog(vm: AppModel) {
                         when {
                             st?.running == true -> GhostButton("Annulla", { ModelDownloader.cancel(m.label) })
                             installed -> {
-                                if (!inUse) PrimaryButton("Usa", { vm.setModel(m.label) }, Modifier.heightIn(min = 44.dp), enabled = !busy)
+                                if (!inUse) PrimaryButton("Usa", { vm.updateModel(m.label) }, Modifier.heightIn(min = 44.dp), enabled = !busy)
                                 GhostButton("Elimina", {
                                     if (busy) Toast.makeText(ctx, "Non puoi eliminare un modello mentre registri o trascrivi.", Toast.LENGTH_SHORT).show()
                                     else { EngineCache.release(); Models.delete(ctx, m); vm.bumpModels(); vm.ensureValidModel() }
