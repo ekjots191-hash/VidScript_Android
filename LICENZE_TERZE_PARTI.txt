@@ -1,0 +1,4 @@
+VidScript per Android usa:
+- whisper.cpp (Georgi Gerganov e collaboratori) — licenza MIT — https://github.com/ggml-org/whisper.cpp
+- Modelli OpenAI Whisper nel formato ggml — licenza MIT — https://huggingface.co/ggerganov/whisper.cpp
+- Jetpack Compose / AndroidX / Kotlin — licenza Apache 2.0
